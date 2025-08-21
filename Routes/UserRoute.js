@@ -11,4 +11,5 @@ router.delete(process.env.BASE_USERCOLLECTION_DELETEONEUSER_URI, verifyToken, ve
 // Protected routes
 router.get(process.env.BASE_USERCOLLECTION_GETUSER_URI+"/:email", verifyToken,userController.userGet);
 router.get(process.env.BASE_USERCOLLECTION_GETAllUSER_URI,verifyToken, userController.alluserGet);
+router.post(process.env.BASE_USERCOLLECTION_LOGOUT_URI,verifyToken, userController.userLogout);
 module.exports = router;

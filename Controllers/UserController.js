@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const Usercollection = require("../Models/UserModel");
 const jwt = require("jsonwebtoken");
 const crudService = require("../Utils/crudService");
+let tokenBlacklist = []; // temporary in-memory blacklist (use Redis/DB in production)
 module.exports = {
   save: async (req, res) => {
      try {
@@ -67,6 +68,7 @@ module.exports = {
       const users = await crudService.getAll(Usercollection);
       res.json({ users });
     } catch (error) {
+       console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
     }
   },
@@ -90,4 +92,22 @@ module.exports = {
       res.status(500).json({ error: "Internal Server Error" });
     }
   },
+   userLogout: async (req, res) => {
+    try {
+      const token = req.header("Authorization");
+
+      if (!token) {
+        return res.status(400).json({ message: "No token provided" });
+      }
+      // Add token to blacklist
+      tokenBlacklist.push(token);
+      res.json({ message: "Logged out successfully" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  },
+
+  // export blacklist so middleware can check it
+  getTokenBlacklist: () => tokenBlacklist,
 };
