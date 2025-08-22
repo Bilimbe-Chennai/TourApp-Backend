@@ -5,6 +5,7 @@ const initDb = require("./InitDB");
 const bodyParser = require("body-parser");
 const userRouter = require("./Routes/UserRoute");
 const generalRouter = require('./Routes/GeneralRouter');
+const adminsRouter = require('./Routes/AdminsRouter');
 require("dotenv").config();
 const app = express();
 app.use(bodyParser.json({ limit: "50mb" })); // increase payload limit
@@ -33,4 +34,5 @@ app.use(express.json({ limit: '500mb' }));
 app.use(express.urlencoded({ limit: '500mb', extended: true }));
 app.use(process.env.BASE_URI, userRouter);
 app.use(process.env.BASE_URI, generalRouter);
+app.use(process.env.BASE_URI, adminsRouter);
 app.listen(process.env.PORT, () => console.log('Server running on http://localhost:5000'));
