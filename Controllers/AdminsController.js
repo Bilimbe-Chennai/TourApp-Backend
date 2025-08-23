@@ -74,7 +74,7 @@ module.exports = {
   try {
     const { _id, ...rest } = req.body;
     // whitelist of allowed fields
-    const allowedFields = ["status", "company_name", "name"];
+    const allowedFields = ["status","logo","contact_person_name","company_name", "name","trips","coordinators"];
     const updateData = {};
 
     // pick only allowed fields from req.body
